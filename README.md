@@ -1,87 +1,91 @@
-[🇬🇧 English](README.en.md) · 🇷🇺 **Русский**
+# Prosvet
 
-# Просвет
+## [⬇ Download ProsvetSetup.exe](https://github.com/Niki113/prosvet/releases/latest/download/ProsvetSetup.exe)
 
-Обход DPI-блокировок для Windows. Без подписок, аккаунтов и телеметрии.
+**Windows 10/11 x64 · 2.2 MB · free · no account needed**
 
-Программа подбирает рабочую стратегию обхода автоматически: перебирает
-27 профилей, проверяет каждый как браузер (HTTP/2) и оставляет тот,
-который реально открывает сайты. Если провайдер что-то поменял —
-переподбирает сама.
+🇬🇧 **English** · [🇷🇺 Русский](README.ru.md)
 
-![Интерфейс](assets/preview.png)
+---
 
-## Что умеет
+DPI bypass for Windows. No subscriptions, no accounts, no telemetry.
 
-- Включение и выключение обхода одной кнопкой
-- Автоподбор стратегии из 27 профилей + 8 собственных техник
-- Авто-режим: следит за движком и доступностью сайтов, чинит сам
-- Автозапуск вместе с Windows + сторожевой таймер каждые 5 минут
-- Проверка доступности 6 сайтов с повторами, как в браузере
-- Сворачивается в трей, журнал всех действий в окне
-- Автообновление с GitHub Releases
+The app picks a working bypass strategy on its own: it tries 27 profiles,
+tests each one like a browser (HTTP/2) and keeps the one that actually opens
+websites. If your ISP changes something, it re-tunes automatically.
 
-## Установка
+![Interface](assets/preview.png)
 
-1. Скачайте `ProsvetSetup.exe` из [Releases](../../releases/latest)
-2. Запустите, нажмите «Установить» (нужен UAC)
-3. Готово — ярлык появится на рабочем столе
+## Install
 
-Требования: Windows 10/11 x64, права администратора (нужны драйверу
-перехвата пакетов).
+1. Download `ProsvetSetup.exe` using the button above
+2. Run it and press "Install" (UAC prompt)
+3. Done — a shortcut appears on your desktop
 
-## Поддержать
+Windows may warn that the publisher is unknown — that is normal for a free
+unsigned installer. Click "More info" → "Run anyway".
 
-Проект бесплатный и без рекламы. Если он экономит вам время:
+## Features
+
+- One-click on/off
+- Automatic strategy selection: 27 profiles + 8 built-in techniques
+- Auto mode: watches the engine and site availability, heals itself
+- Starts with Windows, plus a watchdog every 5 minutes
+- Availability check for 6 sites with retries, like a browser does
+- Lives in the system tray, keeps a log of everything
+- Self-update from GitHub Releases
+
+## How it works
+
+The app does not encrypt traffic and does not change your IP — it is not a VPN.
+It intercepts the first packets of a connection through the WinDivert driver
+and splits/spoofs the TLS ClientHello so that the ISP's equipment fails to
+recognise the destination, while the server still understands the request.
+
+Filter: TCP 80/443, UDP 443 (QUIC). Address lists come from community sets.
+
+## Limitations
+
+- **Instagram, Facebook** — blocked by server IP, a tunnel is required
+- **Telegram** — datacenters are blocked by IP; DPI tricks cannot help
+- **Game ping** is not improved: the tool does not change routing
+
+## Updates
+
+Once a day the app reads `version.json` from this repository. If a newer
+version exists, a line "update available" appears in the window; one click
+downloads the installer, verifies its SHA-256 and installs it silently.
+
+## Support
+
+The project is free and has no ads. If it saves you time:
 
 - [DonationAlerts](https://www.donationalerts.com/r/niki_13_13)
-- [СБП или карта](https://pay.cloudtips.ru/p/483fad75)
+- [SBP or card](https://pay.cloudtips.ru/p/483fad75)
 
-## Как это работает
+## Build from source
 
-Программа не шифрует трафик и не меняет ваш IP — это не VPN.
-Она перехватывает первые пакеты соединения через драйвер WinDivert и
-раздробляет/подменяет TLS-приветствие так, чтобы оборудование
-провайдера не распознало имя сайта, а сервер всё понял правильно.
-
-Фильтр: TCP 80/443, UDP 443 (QUIC). Списки адресов — из открытых
-наборов сообщества.
-
-## Ограничения
-
-- **Instagram, Facebook** — блокировка по адресу сервера, нужен туннель
-- **Telegram** — серверы блокируются по IP, DPI-обход тут бессилен
-- **Пинг в играх** не снижается: обход не меняет маршрут
-
-## Обновления
-
-Программа раз в сутки читает `version.json` из этого репозитория.
-Если версия новее — в окне появляется строка «доступно обновление»,
-по клику скачивается установщик, сверяется SHA-256 и ставится тихо.
-
-## Сборка из исходников
-
-Нужен только .NET Framework 4.x (входит в Windows) и `csc.exe`:
+Only .NET Framework 4.x (ships with Windows) and `csc.exe` are needed:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File build.ps1
 ```
 
-Готовый `Просвет.exe` появится в `dist/`.
+The result is `dist/Просвет.exe`.
 
-## Благодарности и лицензии
+## Credits and licenses
 
-Проект стоит на работе других людей — без них ничего бы не было:
+This project stands on other people's work:
 
 - **zapret** — [bol-van/zapret](https://github.com/bol-van/zapret), MIT
-- **сборка профилей** — [Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube), MIT
+- **profile set** — [Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube), MIT
 - **WinDivert** — [basil00/WinDivert](https://github.com/basil00/WinDivert), LGPLv3 / GPLv2
 
-Тексты лицензий и уведомления — в [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
-Собственный код приложения — MIT, см. [LICENSE](LICENSE).
+License texts and notices are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+The application's own code is MIT, see [LICENSE](LICENSE).
 
-## Дисклеймер
+## Disclaimer
 
-Программа меняет только ваш собственный трафик на вашем компьютере.
-Используйте её в рамках закона вашей страны. Автор не несёт
-ответственности за то, как вы её применяете.
+The software only affects your own traffic on your own machine. Use it in
+compliance with the laws of your country. The author is not responsible for
+how you apply it.
